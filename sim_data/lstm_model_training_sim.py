@@ -30,10 +30,21 @@ P_optimizer = torch.optim.Adam(P_lstm_model.parameters(), lr=0.001)
 P_loss_fn = nn.MSELoss()
 
 # 馬達實際資料
+<<<<<<< HEAD
 path1 = 'sim_data/dataset/x_data_all_15000_Q12_2.txt'
 path2 = 'sim_data/dataset/P_data_all_15000_Q12_2.txt'
 path3 = 'sim_data/dataset/raw_data_all_15000_Q12_2.txt'
 x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3)
+=======
+# path1 = 'sim_data/dataset/x_data_all_15000_Q12_2.txt'
+# path2 = 'sim_data/dataset/P_data_all_15000_Q12_2.txt'
+# path3 = 'sim_data/dataset/raw_data_all_15000_Q12_2.txt'
+path1 = 'sim_data/dataset/x_data_all_AKF_15000_exp2_2.txt'
+path2 = 'sim_data/dataset/P_data_all_AKF_15000_exp2_2.txt'
+path3 = 'sim_data/dataset/raw_data_all_AKF_15000_exp2_2.txt'
+path4 = 'sim_data/dataset/Q_save_AKF_15000_exp2_2.txt'
+x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3, path4)
+>>>>>>> 924f379 (v3)
 # print("x_input_data_all =", x_input_data_all)
 P_true = np.array([[1e-7, 1e-7, 1e-7],
                    [1e-7, 1e-7, 1e-7],
@@ -81,6 +92,7 @@ for epoch in range(epoch + 1):
         x_lstm_output[:, 0] = (x_lstm_output[:, 0]-min1)/norm1
         x_target[:, 0] = (x_target[:, 0]-min1)/norm1
 
+<<<<<<< HEAD
         min2 = np.min(np.array(x_k_update_data)[:, 1])
         max2 = np.max(np.array(x_k_update_data)[:, 1])
         norm2 = max2 - min2
@@ -92,13 +104,30 @@ for epoch in range(epoch + 1):
         norm3 = max3 - min3
         x_lstm_output[:, 2] = (x_lstm_output[:, 2]-min3)/norm3
         x_target[:, 2] = (x_target[:, 2]-min3)/norm3
+=======
+        # min2 = np.min(np.array(x_k_update_data)[:, 1])
+        # max2 = np.max(np.array(x_k_update_data)[:, 1])
+        # norm2 = max2 - min2
+        # x_lstm_output[:, 1] = (x_lstm_output[:, 1]-min2)/norm2
+        # x_target[:, 1] = (x_target[:, 1]-min2)/norm2
+
+        # min3 = np.min(np.array(x_k_update_data)[:, 2])
+        # max3 = np.max(np.array(x_k_update_data)[:, 2])
+        # norm3 = max3 - min3
+        # x_lstm_output[:, 2] = (x_lstm_output[:, 2]-min3)/norm3
+        # x_target[:, 2] = (x_target[:, 2]-min3)/norm3
+>>>>>>> 924f379 (v3)
 
         # x_loss0 = x_loss_fn(x_lstm_output[0:batch_size, 0], x_target[i:i+batch_size, 0])
         # x_loss1 = x_loss_fn(x_lstm_output[0:batch_size, 1], x_target[i:i+batch_size, 1])
         # x_loss2 = x_loss_fn(x_lstm_output[0:batch_size, 2], x_target[i:i+batch_size, 2])
         # print(f'[pos_loss:{x_loss0} -- vel_loss:{x_loss1} -- acc_loss:{x_loss2}]')
 
+<<<<<<< HEAD
         x_loss = x_loss_fn(x_lstm_output[0:batch_size, 0:3], x_target[i:i+batch_size, 0:3])
+=======
+        x_loss = x_loss_fn(x_lstm_output[0:batch_size, 0:1], x_target[i:i+batch_size, 1:2])
+>>>>>>> 924f379 (v3)
         # x_loss = x_loss_fn(x_lstm_output[0:batch_size, :1], x_target[i:i+batch_size]) #可以得到一個epoch中每筆資料的mse
         x_loss_data.append(x_loss.item()) 
         x_rmse_loss = torch.sqrt(x_loss) #可以得到一個epoch中每筆資料的rmse

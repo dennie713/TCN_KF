@@ -10,6 +10,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import time
 import TCN, dataset_arrange, AKF
 import setTCNConfig
+<<<<<<< HEAD
 from TCN import TemporalConvNet
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -27,25 +28,85 @@ if __name__ == "__main__":
     
     # print("x_input_data_all.shape =", x_input_data_all.shape)
     # print("x_input_data_all =", x_input_data_all)
+=======
+import UKF, EKF, OriKF
+from TCN import TemporalConvNet
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# print(torch.cuda.is_available())  # 是否可用 GPU
+# print(torch.cuda.current_device())  # 當前使用的 GPU
+
+if __name__ == "__main__":
+    # 參數設置
+    start_size = 0
+    validation_size = 10000
+    # data_set_size = start_size + validation_size
+
+    # 輸入模擬資料
+    # path1 = 'sim_data/dataset/x_data_all_scara_AKF_15000.txt'
+    # path2 = 'sim_data/dataset/P_data_all_scara_AKF_15000.txt'
+    # path3 = 'sim_data/dataset/raw_data_all_scara_AKF_15000.txt'
+    # path1 = 'sim_data/dataset/AKF/x_data_all_AKF_10000.txt'
+    # path2 = 'sim_data/dataset/AKF/P_data_all_AKF_10000.txt'
+    # path3 = 'sim_data/dataset/AKF/raw_data_all_AKF_10000.txt'
+    # path4 = 'sim_data/dataset/AKF/Q_save_AKF_10000.txt'
+    path1 = 'sim_data/dataset/x_data_all_AKF_15000_exp2.txt'
+    path2 = 'sim_data/dataset/P_data_all_AKF_15000_exp2.txt'
+    path3 = 'sim_data/dataset/raw_data_all_AKF_15000_exp2.txt'
+    path4 = 'sim_data/dataset/Q_save_AKF_15000_exp2.txt'
+    path5 = 'sim_data/dataset/x_input_data_all_KF_28995_comb.txt'
+    Q_data = np.loadtxt(path4, delimiter=' ')
+    # path1 = 'sim_data/dataset/AKF/x_data_all_AKF_addNoise_15000.txt'
+    # path2 = 'sim_data/dataset/AKF/P_data_all_AKF_addNoise_15000.txt'
+    # path3 = 'sim_data/dataset/AKF/raw_data_all_AKF_addNoise_15000.txt'
+    
+    x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3, path4)
+    x_k_update_data = np.concatenate((Q_data[:, 0].reshape(-1, 1), Q_data[:, 4].reshape(-1, 1), Q_data[:, 8].reshape(-1, 1)), axis=1)
+    # print("x_input_data_all.shape =", x_input_data_all.shape)
+    # print("x_input_data_all =", x_input_data_all)
+
+    # 一維KF數據輸出
+    # x_data_all, P_data_all, x_input_data_all = OriKF.KalmanFilter(0.001, x_true_noise)
+    x_input_data_all = np.loadtxt(path5, delimiter=' ')
+
+>>>>>>> 924f379 (v3)
     # 模型參數
     setConfig = setTCNConfig.TCNConfig()
     input_size, output_size, kernel_size,  stride, dropout, num_channels = setConfig.getTCNConfig()
 
     # 加載模型
+<<<<<<< HEAD
     path = 'sim_data/model/x_tcn_fea7_ker5_num[32]_epo300_scara_paper_adj.pth'
     x_tcn_model_loaded = TCN.TemporalConvNet(num_inputs=input_size, num_channels=num_channels, num_classes=output_size, kernel_size=kernel_size,  stride=stride, dropout=dropout)
     x_tcn_model_loaded.load_state_dict(torch.load(path, weights_only=True))  # 加載權重
+=======
+    path = 'sim_data/model/TCN_fea4_ker6_num[4, 64, 128, 3]_epo300.pth' # _AKF_10000_addNoise
+    x_tcn_model_loaded = TCN.TemporalConvNet(num_inputs=input_size, num_channels=num_channels, num_classes=output_size, kernel_size=kernel_size,  stride=stride, dropout=dropout)
+    # x_tcn_model_loaded.load_state_dict(torch.load(path, weights_only=True))  # 加載權重
+    x_tcn_model_loaded.load_state_dict(torch.load(path))  # 加載權重
+>>>>>>> 924f379 (v3)
     x_tcn_model_loaded.eval()  # 將模型設置為評估模式  
     x_tcn_model = x_tcn_model_loaded.to(device)
 
     start_time = time.time()
     x_tcn_output_data = []
+<<<<<<< HEAD
     for k in range(start_size, 4999):
         # print("k =", k)
         # x_tel = cp.array(x_true) - cp.array(x_k_update_data)
         # print("x_input_data_all[k] =", x_input_data_all[k])
         x_input_data = x_input_data_all[k]
         x_input_data = torch.tensor(cp.hstack(x_input_data), dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+=======
+    # x_input_data = x_tcn_output
+    # x_input_data = x_input_data_all[0]
+    for k in range(start_size, start_size+validation_size):
+        # print("k =", k)
+        # x_tel = np.array(x_true) - np.array(x_k_update_data)
+        # print("x_input_data_all[k] =", x_input_data_all[k])
+        x_input_data = x_input_data_all[k]
+        # x_input_data = x_tcn_output_data[k]
+        x_input_data = torch.tensor(np.hstack(x_input_data), dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+>>>>>>> 924f379 (v3)
         # x_input_tensor = x_input_data.clone().detach().to(device)
         x_input_tensor = x_input_data.permute(0, 2, 1)
 
@@ -53,10 +114,24 @@ if __name__ == "__main__":
         with torch.no_grad():  # 禁用梯度計算以提高推斷效率
             x_tcn_output = x_tcn_model_loaded(x_input_tensor)  # 獲取模型的輸出
         x_tcn_output_data.append(x_tcn_output.detach().cpu().numpy().flatten())
+<<<<<<< HEAD
         # print("x TCN Output:", x_tcn_output[:, :3].cpu().numpy())  # 輸出結果
     end_time = time.time()
     x_tcn_output_data_np = x_tcn_output_data
     np.savetxt('sim_data/result/x_tcn_output_data_sim.txt', x_tcn_output_data_np, delimiter=' ')
+=======
+        # x_true_noise[k] = torch.tensor(np.hstack(x_true_noise[k]), dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device).permute(0, 2, 1)
+        
+        # print("x_input_data.shape=",x_input_data[1:4].shape)  # 假设是 (batch_size, channels, sequence_length)
+        # print("x_tcn_output.shape=",x_tcn_output.shape)  # 假设是 (batch_size, channels)
+        # x_tcn_output = x_tcn_output.unsqueeze(2).permute(0, 2, 1)
+        # x_input_data = torch.cat((x_input_data, x_tcn_output.detach()), dim=2)
+        
+    end_time = time.time()
+    x_tcn_output_data_np = x_tcn_output_data
+    # np.savetxt('sim_data/result/x_tcn_output_data_sim.txt', x_tcn_output_data_np, delimiter=' ')
+    np.savetxt('sim_data/result/x_tcn_output_Qdata.txt', x_tcn_output_data_np, delimiter=' ')
+>>>>>>> 924f379 (v3)
 
     #-------------------------------------AKF計算----------------------------------------#
 
@@ -72,10 +147,26 @@ if __name__ == "__main__":
     # x_true_data_noise = x_true_data_noise.reshape(-1, 1)
     # pose, vele, acce, Q_pos, Q_acc, Q_vel, u_p_values, Q_save = AKF.AKF_2(dt, x_true_data_noise, true_pos, true_vel, true_acc)
 
+<<<<<<< HEAD
 
     print("-----------------------------------------")
     print(path)
     print("-----------------------------------------")
+=======
+    dt = 0.001
+#---------------------------------------UKF-------------------------------------------#  
+    UKF_pose, UKF_vele, UKF_acce = UKF.UKF(dt, x_true_noise, 779)
+
+#---------------------------------------EKF-------------------------------------------#  
+    EKF_pose, EKF_vele, EKF_acce = EKF.EKF(dt, x_true_noise, 779)
+
+#---------------------------------------KF--------------------------------------------#  
+    # KF_pose, KF_vele, KF_acce = KF_v2.KF(dt, x_true_noise, 779)
+
+    print("-------------------------------------------------------------------")
+    print(path)
+    print("-------------------------------------------------------------------")
+>>>>>>> 924f379 (v3)
     print("TCN 僅估計X的時間: ", end_time - start_time)
     print("TCN 僅估計X平均一筆的時間: ", (end_time - start_time)/validation_size)
     # 估測狀態匯出
@@ -87,17 +178,27 @@ if __name__ == "__main__":
     # plt.plot(x_true_noise[start_size:start_size + validation_size, 1], label='True_x2_add_noise', color='blue', linewidth=3)
     
     # # print("x_k_update_data =", x_k_update_data)
+<<<<<<< HEAD
     # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 0].get(), label='LKF_x1', color='orange', linewidth=2)
     # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 1].get(), label='LKF_x2', color='cyan', linewidth=2)
     # # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 2].get(), label='LKF_x3', color='pink', linewidth=2)
     # plt.plot(cp.array(x_tcn_output_data)[:, 0].get(), label='DKF_x1', color='purple', linewidth=1)
     # plt.plot(cp.array(x_tcn_output_data)[:, 1].get(), label='DKF_x2', color='red', linewidth=1)
     # # plt.plot(cp.array(x_tcn_output_data)[:, 2].get(), label='DKF_x3', color='green', linewidth=1)
+=======
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 0], label='LKF_x1', color='orange', linewidth=2)
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 1], label='LKF_x2', color='cyan', linewidth=2)
+    # # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='LKF_x3', color='pink', linewidth=2)
+    # plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_x1', color='purple', linewidth=1)
+    # plt.plot(np.array(x_tcn_output_data)[:, 1], label='DKF_x2', color='red', linewidth=1)
+    # # plt.plot(np.array(x_tcn_output_data)[:, 2], label='DKF_x3', color='green', linewidth=1)
+>>>>>>> 924f379 (v3)
     # plt.xlabel('data')
     # plt.ylabel('value')
     # plt.legend()
     # plt.title('estimate vs true :x1 x2')
 
+<<<<<<< HEAD
     # 估測狀態匯出
     print("x_tcn_output_data.shape =", np.array(x_tcn_output_data).shape)
     # plt.figure()
@@ -155,6 +256,213 @@ if __name__ == "__main__":
     # plt.plot(d.get(), label='DKF_x2', color='red', linewidth=1)
     # # f = cp.abs(cp.array(x_tcn_output_data)[:, 2] - cp.array(x_true)[start_size:start_size + validation_size, 2])
     # # plt.plot(f.get(), label='DKF_x2', color='red', linewidth=1)
+=======
+    # print("x_tcn_output_data =", np.array(x_tcn_output_data))
+    # if len(x_tcn_output_data) > 0:
+    #     plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_pos', color='red', linewidth=1)
+    # else:
+    #     print("x_tcn_output_data is empty, no data to plot.")
+    # 估測狀態匯出
+    # print("x_tcn_output_data.shape =", np.array(x_tcn_output_data).shape)
+    
+#---------------------------------------------------------------所有結果比較---------------------------------------------------#
+    # # plt.figure()
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 1)
+    # x_true_noise = x_true
+    # # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_pos', color='red', linewidth=1)
+    # # plt.plot(UKF_pose[start_size:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
+    # # plt.plot(EKF_pose[start_size:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
+    # # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('Pos')
+    # plt.legend(loc='upper right', ncol=2)
+    # plt.title('TCN Result')
+
+    plt.figure(figsize=(8, 6))
+    plt.subplot(3, 1, 2)
+    x_true_noise = x_true
+    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_vel', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
+    # plt.plot(UKF_vele[start_size:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
+    # plt.plot(EKF_vele[start_size:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
+    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
+    plt.xlabel('data')
+    plt.ylabel('value')
+    plt.legend()
+    # plt.title('TCN Result')
+    plt.title('Vel of TCN Result')
+
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 3)
+    # x_true_noise = x_true
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_acc', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
+    # # plt.plot(UKF_acce[start_size:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
+    # # plt.plot(EKF_acce[start_size:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
+    # # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('value')
+    # # plt.legend()
+    # plt.title('Acc of TCN Result')
+#-----------------------------------------------------取1000筆後穩定的資料-----------------------------------------------------------#
+    # # plt.figure()
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 1)
+    # x_true_noise = x_true
+    # # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
+    # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size+1000:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[1000:, 0], label='DKF_pos', color='red', linewidth=1)
+    # # plt.plot(UKF_pose[start_size:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
+    # # plt.plot(EKF_pose[start_size:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
+    # # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('Pos')
+    # plt.legend(loc='upper right', ncol=2)
+    # plt.title('TCN Result after 1000 datas')
+
+    plt.figure(figsize=(8, 6))
+    plt.subplot(3, 1, 2)
+    x_true_noise = x_true
+    plt.plot(np.array(x_k_update_data)[start_size+1000:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    plt.plot(np.array(x_tcn_output_data)[1000:, 0], label='DKF_vel', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
+    # plt.plot(UKF_vele[start_size:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
+    # plt.plot(EKF_vele[start_size:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
+    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
+    plt.xlabel('data')
+    plt.ylabel('value')
+    plt.legend()
+    plt.title('Vel of TCN Result after 1000 datas')
+
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 3)
+    # x_true_noise = x_true
+    # plt.plot(np.array(x_k_update_data)[start_size+1000:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[1000:, 0], label='DKF_acc', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
+    # # plt.plot(UKF_acce[start_size:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
+    # # plt.plot(EKF_acce[start_size:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
+    # # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('value')
+    # # plt.legend()
+    # plt.title('Acc of TCN Result after 1000 datas')
+
+    #---------------------------------------------------------------所有結果比較---------------------------------------------------#
+    # # plt.figure()
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 1)
+    # x_true_noise = x_true
+    # # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_pos', color='red', linewidth=1)
+    # plt.plot(UKF_pose[start_size:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
+    # plt.plot(EKF_pose[start_size:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
+    # # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('Pos')
+    # plt.legend(loc='upper right', ncol=2)
+    # plt.title('Result Comparison')
+
+    plt.figure(figsize=(8, 6))
+    plt.subplot(3, 1, 2)
+    x_true_noise = x_true
+    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_vel', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
+    plt.plot(UKF_vele[start_size:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
+    plt.plot(EKF_vele[start_size:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
+    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
+    plt.xlabel('data')
+    plt.ylabel('value')
+    plt.legend()
+    plt.title('Vel of Result Comparison')
+
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 3)
+    # x_true_noise = x_true
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_acc', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
+    # plt.plot(UKF_acce[start_size:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
+    # plt.plot(EKF_acce[start_size:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
+    # # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('value')
+    # # plt.legend()
+    # plt.title('Acc of Result Comparison')
+
+    #---------------------------------------------------------------取後1000筆數據所有結果比較---------------------------------------------------#
+    # # plt.figure()
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 1)
+    # x_true_noise = x_true
+    # # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
+    # plt.plot(raw_data_all[start_size + validation_size-500:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size + validation_size-500:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[validation_size-500:validation_size, 0], label='DKF_pos', color='red', linewidth=1)
+    # plt.plot(UKF_pose[start_size + validation_size-500:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
+    # plt.plot(EKF_pose[start_size + validation_size-500:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
+    # # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('Pos')
+    # plt.legend(loc='upper right', ncol=2)
+    # plt.title('Result comparison after 1000 datas')
+
+    plt.figure(figsize=(8, 6))
+    plt.subplot(3, 1, 2)
+    x_true_noise = x_true
+    plt.plot(np.array(x_k_update_data)[start_size + validation_size-500:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    plt.plot(np.array(x_tcn_output_data)[validation_size-500:validation_size, 0], label='DKF_vel', color='red', linewidth=1)
+    plt.plot(raw_data_all[start_size + validation_size-500:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
+    plt.plot(UKF_vele[start_size + validation_size-500:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
+    plt.plot(EKF_vele[start_size + validation_size-500:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
+    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
+    plt.xlabel('data')
+    plt.ylabel('value')
+    plt.legend()
+    plt.title('Vel of Result comparison after 1000 datas')
+
+    # plt.figure(figsize=(8, 6))
+    # plt.subplot(3, 1, 3)
+    # x_true_noise = x_true
+    # plt.plot(np.array(x_k_update_data)[start_size + validation_size-500:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_tcn_output_data)[validation_size-500:validation_size, 0], label='DKF_acc', color='red', linewidth=1)
+    # plt.plot(raw_data_all[start_size + validation_size-500:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
+    # plt.plot(UKF_acce[start_size + validation_size-500:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
+    # plt.plot(EKF_acce[start_size + validation_size-500:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
+    # # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
+    # plt.xlabel('data')
+    # plt.ylabel('value')
+    # plt.legend()
+    # plt.title('Vel of Result comparison after 1000 datas')
+
+    # # 估測狀態誤差匯出
+    # plt.figure()
+    # # x_k_update_data = np.array(x_k_update_data).reshape(-1, 1)
+    # # print("x_k_update_data =", x_k_update_data)
+    # # print("x_true =", x_true)
+    # a = np.abs(np.array(x_k_update_data)[start_size:start_size + validation_size, 0] - np.array(x_true)[start_size:start_size + validation_size, 0])
+    # plt.plot(a, label='LKF_x1', color='orange', linewidth=1)
+    # b = np.abs(np.array(x_k_update_data)[start_size:start_size + validation_size, 1] - np.array(x_true)[start_size:start_size + validation_size, 1])
+    # plt.plot(b, label='LKF_x2', color='cyan', linewidth=1)
+    # # e = np.abs(np.array(x_k_update_data)[start_size:start_size + validation_size, 2] - np.array(x_true)[start_size:start_size + validation_size, 2])
+    # # plt.plot(e, label='LKF_x2', color='purple', linewidth=2)
+    # c = np.abs(np.array(x_tcn_output_data)[:, 0] - np.array(x_true)[start_size:start_size + validation_size, 0])
+    # plt.plot(c, label='DKF_x1', color='purple', linewidth=1)
+    # d = np.abs(np.array(x_tcn_output_data)[:, 1] - np.array(x_true)[start_size:start_size + validation_size, 1])
+    # plt.plot(d, label='DKF_x2', color='red', linewidth=1)
+    # # f = np.abs(np.array(x_tcn_output_data)[:, 2] - np.array(x_true)[start_size:start_size + validation_size, 2])
+    # # plt.plot(f, label='DKF_x2', color='red', linewidth=1)
+>>>>>>> 924f379 (v3)
     # plt.xlabel('data')
     # plt.ylabel('estimate value')
     # plt.legend()

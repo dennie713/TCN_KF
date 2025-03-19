@@ -31,9 +31,15 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
     Q = np.array([[0.01, 0, 0],
                   [0, 0.01, 0],
                   [0, 0, 0.01]]) 
+<<<<<<< HEAD
     Q = np.array([[0.01, 0.01, 0.01],
                   [0.01, 0.01, 0.01],
                   [0.01, 0.01, 0.01]]) 
+=======
+    # Q = np.array([[0.01, 0.01, 0.01],
+    #               [0.01, 0.01, 0.01],
+    #               [0.01, 0.01, 0.01]]) 
+>>>>>>> 924f379 (v3)
     # Q = np.array ([[1.37318165e+04,8.23669486e-03,8.23669486e+00],
     #                 [8.23669486e-03,3.52812352e+04,2.56892899e+04],
     #                 [8.23669486e+00,2.56892899e+04,1.30035431e+06]])
@@ -61,9 +67,18 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
     # Q = np.array([[1.25124714e+01, 1.27516429e+00, 1.23241483e+02],
     #                 [1.27516429e+00, 1.74838225e+03, 8.02527454e+05],
     #                 [1.23241483e+02, 8.02527454e+05, 5.35272247e+08]])
+<<<<<<< HEAD
     Q = np.array([[0.01, 1.27516429e+00, 1.23241483e+02],
                     [1.27516429e+00, 0.01, 8.02527454e+05],
                     [1.23241483e+02, 8.02527454e+05, 0.01]])
+=======
+    # Q = np.array([[0.01, 1.27516429e+00, 1.23241483e+02],
+    #                 [1.27516429e+00, 0.01, 8.02527454e+05],
+    #                 [1.23241483e+02, 8.02527454e+05, 0.01]])
+    # Q = np.array([[1.25124714e+01, 1.27516429e+00, 1.23241483e+02],
+    #                 [1.27516429e+00, 1.74838225e+03, 8.02527454e+05],
+    #                 [1.23241483e+02, 8.02527454e+05, 5.35272247e+08]]) # sin
+>>>>>>> 924f379 (v3)
     
     # Q = np.eye(3) * 0.01
     # Q = np.array([[1e-6, 0, 0],
@@ -106,6 +121,10 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
     a_data = [0, 0]
     v_cov_data = []
     a_cov_data = []
+<<<<<<< HEAD
+=======
+    ek_2_data = []
+>>>>>>> 924f379 (v3)
 
     
     for i in range(len(Pos)-2): # m = measurement;p = predict len(pos)
@@ -125,9 +144,50 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
         # print('Pm =', Pm)
         # print('Pm[0][0] =', Pm[0][0])
     #--------------------------------------------R值自適應--------------------------------------------#
+<<<<<<< HEAD
         alpha = 0.2
         # R = alpha * R + (1 - alpha) * (ek * ek + np.dot(np.dot(C, Pp), C.T))
         # print("R =", R)
+=======
+        # alpha = 0.2
+        # R = alpha * R + (1 - alpha) * (ek * ek + np.dot(np.dot(C, Pp), C.T))
+        # print("R =", R)
+    #--------------------------------------------P值自適應--------------------------------------------#
+        # u_p = (Pos[i]- xm[0]) # 實際值-卡爾曼估測值
+        # u_v = Km[1] * u_p - xm[1]
+        # u_a = Km[2] * u_p - xm[2]
+
+        # # # u_v = (Pm[0][1] / Pm[0][0]) * u_p
+        # # # u_a = (Pm[0][2] / Pm[0][0]) * u_p
+
+        # # u_p_values.append(u_p)
+        # # u_v_values.append(u_v)
+        # # u_a_values.append(u_a)
+        # # err = np.array([u_p_values, u_v_values, u_a_values])
+        # # err = err.reshape(-1, 3)
+        # # # print("err =", err)
+        # # cov_P = np.dot(err.T, err)
+        # # cov_P = cov_P.squeeze()
+        # # # print("cov_P =", cov_P)
+
+        # n = i + 1
+        # ek = np.array([u_p, u_v, u_a]) - xm
+        # ek_2 = np.dot(ek, ek.T)
+        # ek_2_data.append(ek_2)
+        # ek_2_data_sqr = [val**2 for val in ek_2_data[:n]]
+        # cal_P = sum(ek_2_data_sqr[:n]) / n
+
+        # cov_P = cal_P
+
+        # gamma = np.linalg.norm(P) / (np.linalg.norm(P) + np.linalg.norm(cov_P))
+        # # gamma = 0.4
+        # P_new = (1-gamma) * P + (gamma) * cov_P
+        # # P_new = (gamma) * P + (1-gamma) * cov_P
+        # # P_new = P + cov_P
+        # Pm = P_new
+        # print("Pm =", Pm)
+
+>>>>>>> 924f379 (v3)
     #--------------------------------------------Q值自適應--------------------------------------------#
         ##-------位置求Q-------##
         # print("-------位置求Q-------")
@@ -186,7 +246,13 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
         # print("np.sqrt(Pm[1][1]) =", np.sqrt(Pm[1][1]))
         # u_v = (Pm[0][1] / Pm[0][0]) * u_p 
         u_v = Km[1] * u_p - xm[1]
+<<<<<<< HEAD
         # u_v = u_p
+=======
+        # u_v = Km[1] * u_p
+        # u_v = u_p
+        # u_v = Pos[i] * Pm[0][1] / Pm[0][0]
+>>>>>>> 924f379 (v3)
         # u_v = (Pos[i] * Pm[0][1] / Pm[0][0] - xm[1])
         # v_cov = Pos[i] * Pm[0][1] / Pm[0][0]
         v_cov = Km[1] * u_p
@@ -269,7 +335,13 @@ def AKF_2(dt, Pos, true_pos, true_vel, true_acc):
         # u_a = (Km[2]) * u_p + np.random.normal(0, np.sqrt(Pm[2][2]))
         # u_a = (Pm[0][2] / Pm[0][0]) * u_p 
         u_a = Km[2] * u_p - xm[2] 
+<<<<<<< HEAD
         # u_a = u_p
+=======
+        # u_a = Km[2] * u_p
+        # u_a = u_p
+        # u_a = Pos[i] * Pm[0][2] / Pm[0][0]
+>>>>>>> 924f379 (v3)
         # u_a = (Pos[i] * Pm[0][2] / Pm[0][0] - xm[2])
         # a_cov = Pos[i] * Pm[0][2] / Pm[0][0]
         a_cov = Km[2] * u_p

@@ -13,10 +13,21 @@ import setLSTMConfig
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # 馬達實際資料
+<<<<<<< HEAD
 path1 = 'sim_data/dataset/x_data_all_15000_Q12_2.txt'
 path2 = 'sim_data/dataset/P_data_all_15000_Q12_2.txt'
 path3 = 'sim_data/dataset/raw_data_all_15000_Q12_2.txt'
 x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3)
+=======
+# path1 = 'sim_data/dataset/x_data_all_15000_Q12_2.txt'
+# path2 = 'sim_data/dataset/P_data_all_15000_Q12_2.txt'
+# path3 = 'sim_data/dataset/raw_data_all_15000_Q12_2.txt'
+path1 = 'sim_data/dataset/x_data_all_AKF_15000_exp2_2.txt'
+path2 = 'sim_data/dataset/P_data_all_AKF_15000_exp2_2.txt'
+path3 = 'sim_data/dataset/raw_data_all_AKF_15000_exp2_2.txt'
+path4 = 'sim_data/dataset/Q_save_AKF_15000_exp2_2.txt'
+x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3, path4)
+>>>>>>> 924f379 (v3)
 
 # 參數設置
 setConfig = setLSTMConfig.LSTMConfig()
@@ -57,7 +68,11 @@ for k in range(start_size, start_size + validation_size):
     x_lstm_output_data.append(x_lstm_output.detach().cpu().numpy().flatten())
     print("x LSTM Output:", x_lstm_output[:, :3])  # 輸出結果
 print('-----------------')
+<<<<<<< HEAD
 print("x =",cp.reshape(cp.array(x_lstm_output_data)[-1, :3], (3, 1)))
+=======
+# print("x =",cp.reshape(cp.array(x_lstm_output_data)[-1, :3], (3, 1)))
+>>>>>>> 924f379 (v3)
 
 # --------P_model loading --------#
 # P_lstm_output_data = []
@@ -99,7 +114,11 @@ plt.title('LSTM result')
 plt.subplot(3, 1, 2)
 x_true_noise = x_true
 plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 1].get(), label='LKF_vel', linewidth=2)
+<<<<<<< HEAD
 plt.plot(cp.array(x_lstm_output_data)[:, 1].get(), label='DKF_vel', linewidth=1)
+=======
+plt.plot(cp.array(x_lstm_output_data)[:, 0].get(), label='DKF_vel', linewidth=1)
+>>>>>>> 924f379 (v3)
 plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', linewidth=1)
 plt.xlabel('Vel')
 plt.ylabel('value')
@@ -107,6 +126,7 @@ plt.ylabel('value')
 # plt.title('Vel of estimate vs true')
 
 # plt.figure()
+<<<<<<< HEAD
 plt.subplot(3, 1, 3)
 x_true_noise = x_true
 plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 2].get(), label='LKF_acc', linewidth=2)
@@ -116,6 +136,17 @@ plt.xlabel('Acc')
 plt.ylabel('value')
 # plt.legend()
 # plt.title('Acc of estimate vs true')
+=======
+# plt.subplot(3, 1, 3)
+# x_true_noise = x_true
+# plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 2].get(), label='LKF_acc', linewidth=2)
+# plt.plot(cp.array(x_lstm_output_data)[:, 2].get(), label='DKF_acc', linewidth=1)
+# plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', linewidth=1)
+# plt.xlabel('Acc')
+# plt.ylabel('value')
+# # plt.legend()
+# # plt.title('Acc of estimate vs true')
+>>>>>>> 924f379 (v3)
 
 # 估測狀態誤差匯出
 x_k_update_data = cp.array(x_k_update_data).reshape(-1, 1)  # reshape to 2D

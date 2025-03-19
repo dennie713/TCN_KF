@@ -1,7 +1,11 @@
 import numpy as np
 
 # 讀取 txt 文件
+<<<<<<< HEAD
 def loadSimData(path_x, path_p, path_raw):
+=======
+def loadSimData(path_x, path_p, path_raw, path_Q):
+>>>>>>> 924f379 (v3)
 
     # raw data順序true_pos, true_vel, true_acc
     raw_data = np.loadtxt(path_raw, delimiter=' ')
@@ -27,11 +31,48 @@ def loadSimData(path_x, path_p, path_raw):
     x_k_predict_data = x_data[:, 11:14]
     # x_obsve = x_data[:, 10]# z_data
     # x_k_predict_data = x_data[:, 11:13]
+<<<<<<< HEAD
     # x_input_data_all = raw_data
     # x_input_data_all = np.concatenate((x_true, true_pos, true_vel, true_acc), axis=1)
     # print("x_input_data_all =", np.array(x_input_data_all).shape)
     # x_input_data_all = np.concatenate((x_true_noise, k_y_data), axis=1)
     x_input_data_all = np.concatenate((x_true_noise, k_y_data, x_tel), axis=1) # paper dataset
+=======
+
+    Q_data = np.loadtxt(path_Q, delimiter=' ')
+    #只取對角元素當特徵
+    # x_input_data_all = np.concatenate((x_true_noise, Q_data[:, 0].reshape(-1, 1), Q_data[:, 4].reshape(-1, 1), Q_data[:, 8].reshape(-1, 1)), axis=1) # training 
+    # x_input_data_all = np.concatenate((Q_data[:, 0].reshape(-1, 1), Q_data[:, 4].reshape(-1, 1), Q_data[:, 8].reshape(-1, 1)), axis=1) # training 
+    # print("x_input_data_all =", x_input_data_all)
+    # 推論對角元素即可
+    Q = np.array([0.01, 0.01, 0.01]).reshape(-1, 3)
+    # Q = np.array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]).reshape(-1, 9)
+    Q_expanded = np.tile(Q, (9998, 1))
+    # print(Q_expanded.shape)  # (10000, 9)
+    # x_input_data_all = np.concatenate((x_true_noise, Q_expanded), axis=1) # loading
+    # x_input_data_all = Q_expanded # loading
+
+    # x_input_data_all = raw_data
+    x_input_data_all = x_true_noise # dataset 8
+    # x_input_data_all = np.concatenate((x_true_noise,x_true_noise), axis=1)
+    # x_input_data_all = np.concatenate((x_true_noise, x_k_update_data[:, 0:1].reshape(-1, 1)), axis=1) # dataset
+    # x_input_data_all = np.concatenate((x_true_noise, x_true_noise, x_true_noise), axis=1)
+    # x_input_data_all = np.concatenate((x_true, true_pos, true_vel, true_acc), axis=1)
+    # print("x_input_data_all =", np.array(x_input_data_all).shape)
+    # x_input_data_all = np.concatenate((x_true_noise, k_y_data), axis=1)
+    # x_input_data_all = np.concatenate((x_true_noise, true_pos[:14998]), axis=1)
+    x_input_data_all = np.concatenate((x_true_noise, x_true_noise, x_true_noise), axis=1)
+    # x_input_data_all = np.concatenate((x_true_noise, k_y_data, x_tel), axis=1) # paper dataset
+    # x_input_data_all = np.concatenate((k_y_data[:, 1].reshape(-1, 1), x_tel[:, 1].reshape(-1, 1)), axis=1) # paper dataset
+    x_input_data_all = np.concatenate((x_true_noise, k_y_data[:, 1].reshape(-1, 1), x_tel[:, 1].reshape(-1, 1)), axis=1) # paper dataset
+    x_input_data_all = np.concatenate((x_true_noise, x_k_update_data[:, 1].reshape(-1, 1), k_y_data[:, 1].reshape(-1, 1), x_tel[:, 1].reshape(-1, 1)), axis=1) 
+
+    # x_input_data_all = np.concatenate((x_true_noise, x_k_update_data), axis=1) # dataset 6
+    # x_input_data_all = np.concatenate((x_true_noise, x_k_update_data, k_y_data), axis=1) # dataset 7
+    # x_input_data_all = np.concatenate((x_true_noise, x_k_update_data, k_y_data, x_tel), axis=1) # dataset 9
+    # x_input_data_all = np.concatenate((x_true_noise, x_true_noise, x_true_noise, x_true_noise), axis=1) # 
+
+>>>>>>> 924f379 (v3)
     # x_input_data_all = np.concatenate((true_pos, true_vel, true_acc), axis=1) # dataset 2
     # x_input_data_all = np.concatenate((x_true_noise, k_y_data, x_tel, true_pos, true_vel, true_acc), axis=1) # dataset 1
     # x_input_data_all = np.concatenate((x_true_noise, true_pos, true_vel, true_acc), axis=1) # dataset 2

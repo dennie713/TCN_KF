@@ -152,7 +152,11 @@ if __name__ == "__main__":
     A = 5.0          # 振幅
     omega = 2 * np.pi # 角頻率（1 Hz）
     dt = 0.001        # 時間步長
+<<<<<<< HEAD
     total_time = 2
+=======
+    total_time = 1
+>>>>>>> 924f379 (v3)
     t = np.arange(0, total_time*1000, 1)
     measurement_noise = 0.01
 

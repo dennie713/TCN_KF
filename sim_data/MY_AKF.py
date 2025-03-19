@@ -107,6 +107,12 @@ def MY_AKF(dt, Pos, true_pos, true_vel, true_acc):
     v_cov_data = []
     a_cov_data = []
     count = 0
+<<<<<<< HEAD
+=======
+    ek_2_data = []
+    ek_data = [0]
+    ek_err_data = []
+>>>>>>> 924f379 (v3)
     
     for i in range(len(Pos)-2): # m = measurement;p = predict len(pos)
         # print("Q_in =", Q)
@@ -162,6 +168,7 @@ def MY_AKF(dt, Pos, true_pos, true_vel, true_acc):
         u_a_values.append(u_a)
         err = np.array([u_p_values, u_v_values, u_a_values])
         err = err.reshape(-1, 3)
+<<<<<<< HEAD
         print("err =", err)
         cov_P = np.dot(err.T, err)
         cov_P = cov_P.squeeze()
@@ -172,12 +179,51 @@ def MY_AKF(dt, Pos, true_pos, true_vel, true_acc):
         
         #--------------------------------------------R值自適應--------------------------------------------#
         # alpha = 0.7
+=======
+        # print("err =", err)
+        cov_P = np.dot(err.T, err)/n
+        cov_P = cov_P.squeeze()
+        print("cov_P =", cov_P)
+        
+        n = i + 1
+        ek = np.array([u_p, u_v, u_a]) - xm
+        ek_2 = np.dot(ek, ek.T)
+        ek_2_data.append(ek_2)
+        ek_2_data_sqr = [val**2 for val in ek_2_data[:n]]
+        cal_P = sum(ek_2_data[:n]) / n
+        cov_P = cal_P
+
+        # ek_data.append(ek)
+        # if i > 0:
+        #     # 計算 ek_err
+        #     ek_err = ek_data[i] - ek_data[i-1]
+        #     ek_err_data.append(ek_err)
+            
+        #     # 轉換為 numpy 數組並確保維度是正確的，這裡我們假設每個誤差是 1x3 向量
+        #     ek_err_data_array = np.array(ek_err_data)
+        #     ek_err_data_array = ek_err_data_array.reshape(-1, 3)
+        #     print("ek_err_data_array.shape =", ek_err_data_array.shape)
+        #     print("ek_err_data_array =", ek_err_data_array)
+            
+        #     # 計算協方差矩陣
+        #     cov_Q = np.cov(ek_err_data_array.T)  # 計算列之間的協方差
+        #     print("cov_Q =", cov_Q)
+        # else:
+        #     cov_Q = Q
+        #--------------------------------------------R值自適應--------------------------------------------#
+        # alpha = 0.2
+>>>>>>> 924f379 (v3)
         # R = alpha * R + (1 - alpha) * (ek_2 * ek_2 + np.dot(np.dot(C, Pp), C.T))
         # print("R =", R)
 
         #--------------------------------------------P值自適應--------------------------------------------#
+<<<<<<< HEAD
         gamma = np.trace(P) / (np.trace(P) + np.trace(cov_P))
         # gamma = np.linalg.norm(P) / (np.linalg.norm(P) + np.linalg.norm(cov_P))
+=======
+        # gamma = np.trace(P) / (np.trace(P) + np.trace(cov_P))
+        gamma = np.linalg.norm(P) / (np.linalg.norm(P) + np.linalg.norm(cov_P))
+>>>>>>> 924f379 (v3)
         # gamma = 0.4
         P_new = (1-gamma) * P + (gamma) * cov_P
         # P_new = (gamma) * P + (1-gamma) * cov_P
@@ -208,20 +254,36 @@ def MY_AKF(dt, Pos, true_pos, true_vel, true_acc):
         # beta = np.linalg.norm(del_Q, 'fro') / (np.linalg.norm(Q, 'fro'))
         
         q = xp - np.dot(A, xm)
+<<<<<<< HEAD
         q_2 = np.dot(q.T, q)
         beta = np.trace(Q) / (np.trace(Q) + np.trace(q_2))
         print("q_2 =", q_2)
+=======
+        # print("q =", q)
+        q_2 = np.dot(q, q.T)
+        # beta = np.trace(Q) / (np.trace(Q) + np.trace(q_2))
+        # print("q_2 =", q_2)
+>>>>>>> 924f379 (v3)
         # Q = beta * q_2 + (1-beta) * Q 
 
         # beta = 0.8
         beta = np.trace(Q) / (np.trace(Q) + np.trace(del_Q))
+<<<<<<< HEAD
+=======
+        # lemda = np.trace(Q) / (np.trace(Q) + np.trace(cov_Q))
+        # lemda = 0.9
+>>>>>>> 924f379 (v3)
         # print("beta =", beta)
         # if beta < 0.4:
         #     beta = 0.4
         #     count = count + 1
         #     print("count =", count)
             # print("beta < 0.5")
+<<<<<<< HEAD
         Q_new = (beta) * Q + (1-beta) * del_Q 
+=======
+        # Q_new = (beta) * Q + (1-beta) * del_Q 
+>>>>>>> 924f379 (v3)
         # adj = np.array([[M_u_p, 0, 0],
         #                 [0, M_u_v, 0],
         #                 [0, 0, M_u_a]])
@@ -229,8 +291,16 @@ def MY_AKF(dt, Pos, true_pos, true_vel, true_acc):
         # Q[0][0] = Q[0][0]*M_u_p
         # Q[1][1] = Q[1][1]*M_u_v
         # Q[2][2] = Q[2][2]*M_u_a
+<<<<<<< HEAD
         # Q_new = Q + del_Q
         # Q_new = np.dot(np.dot(A, cov_P), A.T) + del_Q
+=======
+        # Q_new = q_2 +  del_Q
+        # Q_new = lemda * Q + (1 - lemda) * cov_Q
+        Q_new = Q + del_Q
+        # Q_new = Pm - np.dot(np.dot(A, cov_P), A.T) + del_Q
+        # Q_new = cov_P + del_Q
+>>>>>>> 924f379 (v3)
 
         # q = np.dot(np.dot(A, cov_P), A.T)
         # gamma = np.linalg.norm(Q, 'fro') / (np.linalg.norm(Q, 'fro') + np.linalg.norm(q, 'fro'))
