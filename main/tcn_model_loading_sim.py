@@ -19,21 +19,12 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 if __name__ == "__main__":
     # 參數設置
     start_size = 0
-    validation_size = 12000
+    validation_size = 12000 
 
     # 輸入模擬資料
     # 選擇輸入資料
-    scara = 2
+    scara = 1
     if scara == 1:
-        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
-        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
-        path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
-    elif scara == 2:
         path1 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/x_data_all_AKF.txt'
         path2 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/P_data_all_AKF.txt'
         path3 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
@@ -42,21 +33,74 @@ if __name__ == "__main__":
         # path6 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/K_RTS_AKF.txt'
         path7 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
         path8 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+    elif scara == 2:
+        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
+        path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+    elif scara == 3:
+        path1 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/Q_data_all_AKF.txt'
+        path5 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/G_tel_data_all_AKF.txt'
+    elif scara == 4:
+        path1 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/Q_data_all_AKF.txt'
+        path5 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/G_tel_data_all_AKF.txt'
     # Q_data = np.loadtxt(path4, delimiter=' ')
-    x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
+    # x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
+    x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7)
+
+    if scara == 3 or scara == 4:
+        x_RTS_data = np.loadtxt(path5, delimiter=' ').reshape(-1, 3) # RTS平滑後的結果
+        # print("x_RTS_data.shape =", x_RTS_data.shape)
     
         #-----------------------------------Ground Truth-------------------------------------------#
     # 目前的Ground Truth是把數據先經過"zero-phase-filter濾波"後再進行"中央差分法"計算的
     # 讀取經過zero_phase_filter的資料
-    if scara == 1:
-        path = 'main/real_dataset/filtered_scara1_120000.txt'
-    elif scara == 2:
-        path = 'main/real_dataset/filtered_scara2_120000.txt'
-    # path = 'real_dataset/filtered_scara2_120000.txt'
-    data = np.genfromtxt(path, delimiter='\t')
-    data = np.array(data)
-    filtered_pos_exp = np.array(data[start_size:validation_size]) 
-    filtered_CFD_pose, filtered_CFD_vele, filtered_CFD_acce = CFD.CFD(filtered_pos_exp)
+    # 六軸
+    # if scara == 1 or scara == 2:
+    #     path_a = 'real_dataset/groundtruth_6axis_2_100000.txt'
+    #     data = np.loadtxt(path_a, delimiter=' ')
+    #     # data = np.genfromtxt(path_a, delimiter=' ')
+    #     # data = np.array(data).reshape(100000, 6)
+    #     if scara == 1:
+    #         filtered_CFD_pose = data[start_size:validation_size, 0]
+    #         filtered_CFD_vele = data[start_size:validation_size, 1]
+    #         filtered_CFD_acce = data[start_size:validation_size, 2]
+    #     elif scara == 2:
+    #         filtered_CFD_pose = data[start_size:validation_size, 3]
+    #         filtered_CFD_vele = data[start_size:validation_size, 4]
+    #         filtered_CFD_acce = data[start_size:validation_size, 5]
+
+    # # 二軸
+    # elif scara == 3 or scara == 4:
+    #     path_b = 'real_dataset/groundtruth_scara_1_120000.txt'
+    #     data = np.loadtxt(path_b, delimiter=' ')
+    #     # data = np.genfromtxt(path_b, delimiter=' ')
+    #     # data = np.array(data).reshape(120000, 6)
+    #     if scara == 3:
+    #         filtered_CFD_pose = data[start_size:validation_size, 0]
+    #         filtered_CFD_vele = data[start_size:validation_size, 1]
+    #         filtered_CFD_acce = data[start_size:validation_size, 2]
+    #     elif scara == 4:
+    #         filtered_CFD_pose = data[start_size:validation_size, 3]
+    #         filtered_CFD_vele = data[start_size:validation_size, 4]
+    #         filtered_CFD_acce = data[start_size:validation_size, 5]
+
     # data_set_size = start_size + validation_size
 
     # x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data  = dataset_arrange.loadSimData(path1, path2, path3, path4)
@@ -72,6 +116,14 @@ if __name__ == "__main__":
     setConfig = setTCNConfig.TCNConfig()
     input_size, output_size, kernel_size,  stride, dropout, num_channels = setConfig.getTCNConfig()
 
+    # 加載模型
+    path = 'main/tcn_model/TCN_6axis_fea3_ker8_num[64, 4]_epo800.pth'
+    x_tcn_model_loaded = TCN.TemporalConvNet(num_inputs=input_size, num_channels=num_channels, num_classes=output_size, kernel_size=kernel_size,  stride=stride, dropout=dropout)
+    # x_tcn_model_loaded.load_state_dict(torch.load(path, weights_only=True))  # 加載權重
+    x_tcn_model_loaded.load_state_dict(torch.load(path))  # 加載權重
+    x_tcn_model_loaded.eval()  # 將模型設置為評估模式  
+    x_tcn_model = x_tcn_model_loaded.to(device) 
+
     # 解標準化
     # 讀取
     data = np.load('tcn_normalization/normalizer.npz')
@@ -79,26 +131,19 @@ if __name__ == "__main__":
     x_std = data['x_std']
     y_mean = data['y_mean']
     y_std = data['y_std']
-    print("y_mean =", y_mean)
-    print("y_std =", y_std)
+    # print("y_mean =", y_mean)
+    # print("y_std =", y_std)
     # train_y_data = Q_data_all[:, 2]
     # y_mean = train_y_data.mean(axis=0, keepdims=True)
     # y_std = train_y_data.std(axis=0, keepdims=True) + 1e-8
 
-    # 加載模型
-    path = 'main/tcn_model/TCN_fea3_ker6_num[256]_epo243.pth'
-    x_tcn_model_loaded = TCN.TemporalConvNet(num_inputs=input_size, num_channels=num_channels, num_classes=output_size, kernel_size=kernel_size,  stride=stride, dropout=dropout)
-    # x_tcn_model_loaded.load_state_dict(torch.load(path, weights_only=True))  # 加載權重
-    x_tcn_model_loaded.load_state_dict(torch.load(path))  # 加載權重
-    x_tcn_model_loaded.eval()  # 將模型設置為評估模式  
-    x_tcn_model = x_tcn_model_loaded.to(device) 
-
     # 輸入標準化
-    standardization = 0
+    standardization = 1
     if standardization == 1:
-        x_input_data_all_mean = x_input_data_all.mean(axis=0, keepdims=True)
-        x_input_data_all_std = x_input_data_all.std(axis=0, keepdims=True) + 1e-8
-        x_input_data_all_norm = (x_input_data_all - x_input_data_all_mean) / x_input_data_all_std
+        # x_input_data_all_mean = x_input_data_all.mean(axis=0, keepdims=True)
+        # x_input_data_all_std = x_input_data_all.std(axis=0, keepdims=True) + 1e-8
+        # x_input_data_all_norm = (x_input_data_all - x_input_data_all_mean) / x_input_data_all_std
+        x_input_data_all_norm = (x_input_data_all - x_mean) / x_std
 
     start_time = time.time()
     x_tcn_output_data = []
@@ -124,9 +169,14 @@ if __name__ == "__main__":
             # 解標準化
             if standardization == 1:
                 x_tcn_output = x_tcn_output.detach().cpu() * y_std + y_mean
+                # x_tcn_output = torch.exp(x_tcn_output)  # 確保輸出正數（用來當共變異的對角項）
             elif standardization == 0:
                 x_tcn_output = x_tcn_output.detach().cpu()
+            print("Q =\n", np.diag(x_tcn_output))
+        # 以log計算
+        # x_tcn_output = torch.exp(x_tcn_output)  # 確保輸出正數（用來當共變異的對角項）
         x_tcn_output_data.append(x_tcn_output.detach().cpu().numpy().flatten())
+        
         # x_tcn_output_data.append(x_tcn_output.detach().cpu().numpy().flatten())
         # x_true_noise[k] = torch.tensor(np.hstack(x_true_noise[k]), dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device).permute(0, 2, 1)
         
@@ -175,13 +225,10 @@ if __name__ == "__main__":
     plt.subplot(3, 1, 1)
     x_true_noise = x_true
     # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
-    # plt.plot(raw_data_all[start_size:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
-    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(filtered_CFD_pose[start_size:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
+    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size:start_size + validation_size, 0], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
     plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_pos', color='red', linewidth=1)
-    # plt.plot(UKF_pose[start_size:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
-    # plt.plot(EKF_pose[start_size:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
-    # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('Pos')
     plt.legend(loc='upper right', ncol=2)
@@ -190,14 +237,10 @@ if __name__ == "__main__":
     # plt.figure(figsize=(8, 6))
     plt.subplot(3, 1, 2)
     x_true_noise = x_true
-    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(filtered_CFD_vele[start_size:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size:start_size + validation_size, 1], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
     # plt.plot(np.array(x_tcn_output_data)[start_size:start_size + validation_size, 1], label='DKF_vel', color='red', linewidth=1)
-    # plt.plot(np.array(x_tcn_output_data)[::-1][:, 0], label='DKF_vel', color='red', linewidth=1)
-    # plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
-    # plt.plot(UKF_vele[start_size:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
-    # plt.plot(EKF_vele[start_size:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
-    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('vel')
     plt.legend(loc='upper right', ncol=2)
@@ -207,14 +250,10 @@ if __name__ == "__main__":
     # plt.figure(figsize=(8, 6))
     plt.subplot(3, 1, 3)
     x_true_noise = x_true
-    plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(filtered_CFD_acce[start_size:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
+    # plt.plot(np.array(x_k_update_data)[start_size:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size:start_size + validation_size, 2], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
-    # plt.plot(np.array(x_tcn_output_data)[:, 1], label='DKF_vel', color='red', linewidth=1)
     # plt.plot(np.array(x_tcn_output_data)[start_size:start_size + validation_size, 2], label='DKF_acc', color='red', linewidth=1)
-    # plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
-    # # plt.plot(UKF_acce[start_size:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
-    # # plt.plot(EKF_acce[start_size:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
-    # # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('acc')
     plt.legend(loc='upper right', ncol=2)
@@ -227,12 +266,9 @@ if __name__ == "__main__":
     x_true_noise = x_true
     # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
     # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 0], label='true_pos', color='black', linewidth=1)
-    plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 0], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
+    plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 2], label='AKF_pos', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size+200:start_size + validation_size, 0], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
     plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 0], label='DKF_pos', color='red', linewidth=1)
-    # plt.plot(UKF_pose[start_size:start_size + validation_size], label='UKF_pos', color='purple', linewidth=1)
-    # plt.plot(EKF_pose[start_size:start_size + validation_size], label='EKF_pos', color='orange', linewidth=1)
-    # plt.plot(np.array(pose), label='AKF_pos', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('Pos')
     plt.legend(loc='upper right', ncol=2)
@@ -241,14 +277,10 @@ if __name__ == "__main__":
     # plt.figure(figsize=(8, 6))
     plt.subplot(3, 1, 2)
     x_true_noise = x_true
-    plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 1], label='AKF_vel', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size+200:start_size + validation_size, 1], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
     # plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 1], label='DKF_vel', color='red', linewidth=1)
-    # plt.plot(np.array(x_tcn_output_data)[::-1][200:, 0], label='DKF_vel', color='red', linewidth=1)
     # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 1], label='true_vel', color='black', linewidth=1)
-    # plt.plot(UKF_vele[start_size:start_size + validation_size], label='UKF_vel', color='purple', linewidth=1)
-    # plt.plot(EKF_vele[start_size:start_size + validation_size], label='EKF_vel', color='orange', linewidth=1)
-    # plt.plot(np.array(vele), label='AKF_vel', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('vel')
     plt.legend(loc='upper right', ncol=2)
@@ -257,14 +289,10 @@ if __name__ == "__main__":
     # plt.figure(figsize=(8, 6))
     plt.subplot(3, 1, 3)
     x_true_noise = x_true
-    plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
+    # plt.plot(np.array(x_k_update_data)[start_size+200:start_size + validation_size, 2], label='AKF_acc', color='blue', linewidth=1, linestyle="--")
     # plt.plot(np.array(x_RTS_data)[start_size+200:start_size + validation_size, 2], label='RTS_vel', color='black', linewidth=1, linestyle="-.")
-    # plt.plot(np.array(x_tcn_output_data)[200:, 1], label='DKF_vel', color='red', linewidth=1)
     # plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 2], label='DKF_acc', color='red', linewidth=1)
     # plt.plot(raw_data_all[start_size+1000:start_size + validation_size, 2], label='true_acc', color='black', linewidth=1)
-    # plt.plot(UKF_acce[start_size:start_size + validation_size], label='UKF_acc', color='purple', linewidth=1)
-    # plt.plot(EKF_acce[start_size:start_size + validation_size], label='EKF_acc', color='orange', linewidth=1)
-    # plt.plot(np.array(acce), label='AKF_acc', color='green', linewidth=1)
     plt.xlabel('data')
     plt.ylabel('acc')
     plt.legend(loc='upper right', ncol=2)
@@ -279,22 +307,25 @@ if __name__ == "__main__":
     # result2_RTS = calculateError_RTS.calError2(filtered_CFD_vele[600:], filtered_CFD_acce[600:], vele[600:], acce[600:], x_RTS[:, 1][600:], x_RTS[:, 2][600:])
 
     # Q值結果
-    plt.figure()
-    plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_Q_pos', color='red', linewidth=1)
-    plt.xlabel('iteration')
+    plt.figure() 
+    plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 0], label='DKF_Q_pos', color='red', linewidth=1, marker='x')
+    # plt.plot(np.array(Q_data_all)[start_size+200:start_size + validation_size, 0], label='Q_pos', color='black', linewidth=1)
+    plt.xlabel('iteration') 
     plt.ylabel('Q values')
     plt.legend(loc='upper right', ncol=1)
     plt.title('Q_pos Result')
 
     plt.figure()
-    plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_Q_vel', color='red', linewidth=1)
+    plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 1], label='DKF_Q_vel', color='red', linewidth=1, marker='x')
+    # plt.plot(np.array(Q_data_all)[start_size+200:start_size + validation_size, 1], label='Q_pos', color='black', linewidth=1)
     plt.xlabel('iteration')
     plt.ylabel('Q values')
     plt.legend(loc='upper right', ncol=1)
     plt.title('Q_vel Result')
 
     plt.figure()
-    plt.plot(np.array(x_tcn_output_data)[:, 0], label='DKF_Q_acc', color='red', linewidth=1)
+    plt.plot(np.array(x_tcn_output_data)[start_size+200:start_size + validation_size, 2], label='DKF_Q_acc', color='red', linewidth=1, marker='x')
+    # plt.plot(np.array(Q_data_all)[start_size+200:start_size + validation_size, 2], label='Q_pos', color='black', linewidth=1)
     plt.xlabel('iteration')
     plt.ylabel('Q values')
     plt.legend(loc='upper right', ncol=1)

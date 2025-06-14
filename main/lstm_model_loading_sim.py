@@ -19,7 +19,7 @@ if __name__ == "__main__":
     validation_size = 12000
     # 輸入模擬資料
     # 選擇輸入資料
-    scara = 2
+    scara = 1
     if scara == 1:
         path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
         path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     # 加載模型
     x_lstm_model_loaded = LSTM.LSTM_KF(x_input_size, hidden_size, x_output_size, num_layers, dropout)  # 創建模型實例
-    x_lstm_model_loaded.load_state_dict(torch.load('main/lstm_model/lstm_model_in1_out1_hid32_layer1_epo500.pth', weights_only=True))  # 加載權重
+    x_lstm_model_loaded.load_state_dict(torch.load('main/lstm_model/lstm_model_in3_out3_hid64_layer2_epo202.pth', weights_only=True))  # 加載權重
     x_lstm_model_loaded.eval()  # 將模型設置為評估模式
     x_lstm_model_loaded = x_lstm_model_loaded.to(device)
     # hidden_size = 128
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     data_set_size = start_size + validation_size
 
     # 輸入標準化
-    standardization = 0
+    standardization = 1
     if standardization == 1:
         x_input_data_all_mean = x_input_data_all.mean(axis=0, keepdims=True)
         x_input_data_all_std = x_input_data_all.std(axis=0, keepdims=True) + 1e-8
@@ -92,8 +92,9 @@ if __name__ == "__main__":
         # 使用模型進行推斷
         with torch.no_grad():  # 禁用梯度計算以提高推斷效率
             x_lstm_output = x_lstm_model_loaded(x_input_tensor)  # 獲取模型的輸出
-            x_tcn_output_denorm = x_lstm_output.detach().cpu() * y_std + y_mean
-        x_lstm_output_data.append(x_lstm_output.detach().cpu().numpy().flatten())
+            x_lstm_output_denorm = x_lstm_output.detach().cpu() * y_std + y_mean
+            x_lstm_output_delog = torch.exp(x_lstm_output_denorm)
+        x_lstm_output_data.append(x_lstm_output_delog.detach().cpu().numpy().flatten())
         # print("x LSTM Output:", x_lstm_output[:, :3])  # 輸出結果
     # print('-----------------')
 
@@ -115,9 +116,9 @@ if __name__ == "__main__":
     plt.subplot(3, 1, 1)
     x_true_noise = x_true
     # plt.plot(x_true_noise[start_size:start_size + validation_size], label='True_x1_add_noise', color='black', linewidth=3)
-    plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 0].get(), label='LKF_pos', linewidth=2)
+    # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 0].get(), label='LKF_pos', linewidth=2)
     plt.plot(cp.array(x_lstm_output_data)[:, 0].get(), label='DKF_pos',  linewidth=1)
-    plt.plot(raw_data_all[start_size:start_size + validation_size, 0], label='true_pos', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 0], label='true_pos', linewidth=1)
     plt.xlabel('Pos')
     plt.ylabel('value')
     plt.legend()
@@ -126,10 +127,10 @@ if __name__ == "__main__":
     # plt.figure()
     plt.subplot(3, 1, 2)
     x_true_noise = x_true
-    plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 1].get(), label='LKF_vel', linewidth=2)
+    # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 1].get(), label='LKF_vel', linewidth=2)
 
-    # plt.plot(cp.array(x_lstm_output_data)[:, 1].get(), label='DKF_vel', linewidth=1)
-    plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', linewidth=1)
+    plt.plot(cp.array(x_lstm_output_data)[:, 1].get(), label='DKF_vel', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 1], label='true_vel', linewidth=1)
     plt.xlabel('Vel')
     plt.ylabel('value')
     # plt.legend()
@@ -138,9 +139,9 @@ if __name__ == "__main__":
     # plt.figure()
     plt.subplot(3, 1, 3)
     x_true_noise = x_true
-    plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 2].get(), label='LKF_acc', linewidth=2)
-    # plt.plot(cp.array(x_lstm_output_data)[:, 2].get(), label='DKF_acc', linewidth=1)
-    plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', linewidth=1)
+    # plt.plot(cp.array(x_k_update_data)[start_size:start_size + validation_size, 2].get(), label='LKF_acc', linewidth=2)
+    plt.plot(cp.array(x_lstm_output_data)[:, 2].get(), label='DKF_acc', linewidth=1)
+    # plt.plot(raw_data_all[start_size:start_size + validation_size, 2], label='true_acc', linewidth=1)
     plt.xlabel('Acc')
     plt.ylabel('value')
     # plt.legend()

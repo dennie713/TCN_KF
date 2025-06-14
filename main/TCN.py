@@ -123,6 +123,7 @@ class TemporalConvNet(nn.Module):
 
         # 增加全連接層以設定輸出類別數
         self.fc = nn.Linear(num_channels[-1], num_classes)
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         x = self.network(x)
@@ -132,6 +133,8 @@ class TemporalConvNet(nn.Module):
 
         # 確保輸出為正
         x = torch.exp(x)  # 確保輸出正數（用來當共變異的對角項）
+        # x = self.relu(x)
+
         return x
         # return self.network(x) # 為了調整output size註解的
 

@@ -19,10 +19,10 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # 測試 TCN 模型
 if __name__ == "__main__":
     # 訓練參數設置
-    epoch = 500
-    start_size = 0
+    epoch = 800
+    start_size = 1000 # 350
     traning_size = 12000
-    batch_size = 100
+    batch_size = 256
     data_set_size = traning_size - start_size
 
     # 輸入模擬資料
@@ -32,17 +32,8 @@ if __name__ == "__main__":
     # path4 = 'sim_data/dataset/Q_save_AKF_28995_comb.txt'
     # path5 = 'sim_data/dataset/x_input_data_all_KF_28995_comb.txt'
     # 選擇輸入資料
-    scara = 1
+    scara = 2
     if scara == 1:
-        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
-        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
-        path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
-    elif scara == 2:
         path1 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/x_data_all_AKF.txt'
         path2 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/P_data_all_AKF.txt'
         path3 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
@@ -51,12 +42,45 @@ if __name__ == "__main__":
         # path6 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/K_RTS_AKF.txt'
         path7 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
         path8 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+    elif scara == 2:
+        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
+        path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+    elif scara == 3:
+        path1 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/Q_data_all_AKF.txt'
+        path5 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/G_tel_data_all_AKF.txt'
+    elif scara == 4:
+        path1 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/Q_data_all_AKF.txt'
+        path5 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/G_tel_data_all_AKF.txt'
     # Q_data = np.loadtxt(path4, delimiter=' ')
-    x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
+    # x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
+    x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7)
+
+    if scara == 3 or scara == 4:
+        x_RTS_data = np.loadtxt(path5, delimiter=' ').reshape(-1, 3) # RTS平滑後的結果
+        # print("x_RTS_data.shape =", x_RTS_data.shape)
 
     setConfig = setTCNConfig.TCNConfig()
     input_size, output_size, kernel_size,  stride, dropout, num_channels = setConfig.getTCNConfig()
     x_tcn_model = TCN.TemporalConvNet(num_inputs=input_size, num_classes=output_size, kernel_size=kernel_size,  stride=stride, dropout=dropout, num_channels=num_channels)
+    print('x_tcn_model =', x_tcn_model)
     # paper lstm model setting
     # x_tcn_model = TCN.TCN_Q(input_dim=1)
     x_tcn_model = x_tcn_model.to(device)
@@ -89,29 +113,32 @@ if __name__ == "__main__":
     # x_k_update_data = np.concatenate((Q_data[:, 0].reshape(-1, 1), Q_data[:, 4].reshape(-1, 1), Q_data[:, 8].reshape(-1, 1)), axis=1)
 
     train_x_data = x_input_data_all[start_size:traning_size, :]
+    # train_x_data = x_input_data_all[1000:traning_size, :]
     # print("train_x_data =", train_x_data)
 
     # 卡爾曼之後的結果
     # train_y_data = x_k_update_data[start_size:traning_size, :]
     # RTS平滑後的結果
-    # train_y_data = x_RTS_data[start_size:traning_size, 2]
-    # train_y_data = K_RTS_data[::-1]
-    train_y_data = Q_data_all[start_size:traning_size, 0]#.reshape(-1, 1)
+    # train_y_data = x_RTS_data[start_size:traning_size, :]
+    # train_y_data = K_RTS_data[start_size:traning_size, :]
+    train_y_data = Q_data_all[start_size:traning_size, :]#.reshape(-1, 1)
+    # train_y_data = Q_data_all[1000:traning_size, :]
     # print("train_y_data =", train_y_data)
 
     # 標準化
-    standardization = 0
+    standardization = 1
     if standardization == 1:
         x_mean = train_x_data.mean(axis=0, keepdims=True)
         x_std = train_x_data.std(axis=0, keepdims=True) + 1e-8  # 避免除以 0
 
+        # 換成LOG標準化
+        # train_y_data_log = np.log(train_y_data + 1e-8)  # 防止 log(0)
+        # train_y_data = train_y_data_log
         y_mean = train_y_data.mean(axis=0, keepdims=True)
         y_std = train_y_data.std(axis=0, keepdims=True) + 1e-8
 
         train_x_data_norm = (train_x_data - x_mean) / x_std
         train_y_data_norm = (train_y_data - y_mean) / y_std
-        # print("y_mean =", y_mean)
-        # print("y_std =", y_std)
 
         # 儲存於 dict 或寫入檔案
         normalizer = {
@@ -122,6 +149,15 @@ if __name__ == "__main__":
         }
         # 儲存
         np.savez('tcn_normalization/normalizer.npz', x_mean=x_mean, x_std=x_std, y_mean=y_mean, y_std=y_std)
+    else:
+        # train_x_data_log = np.log(train_x_data + 1e-8)  # 防止 log(0)
+        # train_y_data_log = np.log(train_y_data + 1e-8)
+        # train_x_data = train_x_data_log
+        train_y_data = train_y_data
+        train_x_data = train_x_data
+        # train_y_data = train_y_data
+        # train_y_data = np.log(train_y_data + 1e-8)  # 防止 log(0)
+
 
     # 透過標準差來初始化可學習參數
     # std_1 = train_y_data[:, 0].std().item()
@@ -137,7 +173,7 @@ if __name__ == "__main__":
         # 創建批次數據
         x_tcn_model.train()
         x_input_data = []
-        for i in range(start_size, batch_size):
+        for i in range(0, batch_size):
             # print("i =", i)
             # batch_x_input_data_all = x_input_data_all[i:i+batch_size] # me
             if standardization == 1:
@@ -146,6 +182,7 @@ if __name__ == "__main__":
                 batch_x_input_data_all = train_x_data[i:i+batch_size]
             # 添加到批次列表中
             x_input_data = batch_x_input_data_all# me
+            # print("x_input_data =", x_input_data)
             # 將數據轉換為張量，並添加一個維度以符合 TCN 的輸入格式
             x_input_tensor = torch.tensor(np.vstack(x_input_data), dtype=torch.float32).unsqueeze(2).to(device)
 
@@ -168,12 +205,13 @@ if __name__ == "__main__":
 
             # loss_1 = x_loss_fn(x_tcn_output[:, 0], x_target[:, 0])
             # loss_2 = x_loss_fn(x_tcn_output[:, 1], x_target[:, 1])
-            # loss_3 = x_loss_fn(x_tcn_output[:, :], x_target[:, 2])
+            # loss_3 = x_loss_fn(x_tcn_output[:, 2], x_target[:, 2])
 
             # 多個損失函數的加權和
             # x_loss = (loss_1 / (2 * sigma1**2) + loss_2 / (2 * sigma2**2)) + torch.log(sigma1 * sigma2)
             # x_loss = (loss_1 / (2 * sigma1**2) + loss_2 / (2 * sigma2**2) + loss_3 / (2 * sigma3**2)) + torch.log(sigma1 * sigma2 * sigma3)
             # x_loss = (loss_3 / (2 * sigma3**2)) + torch.log(sigma3)
+            # x_loss = loss_1
             # ------------------------------mse損失函數------------------------------ #
             # x_loss = x_loss_fn(x_tcn_output[:batch_size, :], acc_tar)
             # x_loss = x_loss_fn(x_tcn_output[:batch_size, :], x_target)
@@ -181,6 +219,11 @@ if __name__ == "__main__":
             # ------------------------------LogCoshLoss損失函數------------------------------ #
             # x_loss = LogCoshLoss_loss_fn(x_tcn_output[:batch_size, :], acc_tar)
             x_loss = StableLogCoshLoss_loss_fn(x_tcn_output[:batch_size, :], x_target)
+            
+            # ------------------------------輸出的Tr(Q)作為損失函數------------------------------ #
+            # x_loss = x_tcn_output.sum(dim=1).mean()
+
+            # x_loss = x_loss + 0.2 * Q_loss # 損失函數 = mse損失函數 + Q_loss
 
             x_loss_data.append(x_loss.item()) 
             x_rmse_loss = torch.sqrt(x_loss) #可以得到一個epoch中每筆資料的rmse
@@ -212,19 +255,26 @@ if __name__ == "__main__":
             print(f'-------------------------------------')
             print(f'|Epoch: {epoch}/{total_epoch} | x_Loss_RMSE: {x_rmse_total:.6f}|')
             # print(f'|Epoch : {epoch}/{total_epoch} | x_Loss_RMSE : {x_rmse_total.item():.4f}|')
-        
-        full_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+        if scara == 1 or scara == 2:
+            full_path = "main/tcn_model/TCN_6axis_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+        else:
+            full_path = "main/tcn_model/TCN_scara_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+        # full_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
         early_stopper(x_rmse_total, x_tcn_model, path=full_path)
 
         if early_stopper.early_stop:  
-            final_stop_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, epoch)
+            if scara == 1 or scara == 2:
+                final_stop_path = "main/tcn_model/TCN_6axis_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+            else:
+                final_stop_path = "main/tcn_model/TCN_scara_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+            # final_stop_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, epoch)
             torch.save(x_tcn_model.state_dict(), final_stop_path)
             print("Early stopping triggered!")
             print("model path:", final_stop_path)
             break
         elif epoch == total_epoch:
             # x result儲存模型
-            full_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
+            # full_path = "main/tcn_model/TCN_fea{}_ker{}_num{}_epo{}.pth".format(input_size, kernel_size, num_channels, total_epoch)
 
             print("model path:", full_path)
             torch.save(x_tcn_model.state_dict(), full_path)

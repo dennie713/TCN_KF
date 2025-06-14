@@ -14,7 +14,7 @@ if __name__ == "__main__":
         epoch = 500
         start_size = 0  # 訓練資料起始位置
         traning_size = 12000   # diff: 14683 ；diff_2: 29366 # same: 23000
-        batch_size = 500
+        batch_size = 100
         data_set_size = traning_size - start_size
 
         setConfig = setLSTMConfig.LSTMConfig()
@@ -22,7 +22,7 @@ if __name__ == "__main__":
         # x初始化LSTM模型
         x_lstm_model = LSTM.LSTM_KF(x_input_size, hidden_size, x_output_size, num_layers, dropout)
         x_lstm_model = x_lstm_model.to(device)
-        x_optimizer = torch.optim.Adam(x_lstm_model.parameters(), lr=1e-6)
+        x_optimizer = torch.optim.Adam(x_lstm_model.parameters(), lr=1e-4, weight_decay=1e-5)
         x_loss_fn = nn.MSELoss()
 
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
 
         # 早停函數
-        early_stopper = EarlyStopping.EarlyStopping(patience=5, verbose=True)
+        early_stopper = EarlyStopping.EarlyStopping(patience=10, verbose=True)
 
         # 定義損失函數和優化器
         x_loss_fn = nn.MSELoss() 
@@ -79,15 +79,17 @@ if __name__ == "__main__":
         # RTS平滑後的結果
         # train_y_data = x_RTS_data[start_size:traning_size, 2]
         # train_y_data = K_RTS_data[::-1]
-        train_y_data = Q_data_all[start_size:traning_size, 0]#.reshape(-1, 1)
+        train_y_data = Q_data_all[start_size:traning_size, :]#.reshape(-1, 1)
         # print("train_y_data =", train_y_data)
 
         # 標準化
-        standardization = 0
+        standardization = 1
         if standardization == 1:
                 x_mean = train_x_data.mean(axis=0, keepdims=True)
                 x_std = train_x_data.std(axis=0, keepdims=True) + 1e-8  # 避免除以 0
 
+                train_y_data_log = np.log(train_y_data + 1e-8)  # 避免 log(0) 的情況
+                train_y_data = train_y_data_log
                 y_mean = train_y_data.mean(axis=0, keepdims=True)
                 y_std = train_y_data.std(axis=0, keepdims=True) + 1e-8
 
@@ -103,6 +105,9 @@ if __name__ == "__main__":
                 }
                 # 儲存
                 np.savez('lstm_normalization/normalizer.npz', x_mean=x_mean, x_std=x_std, y_mean=y_mean, y_std=y_std)
+        else:
+                train_x_data = train_x_data
+                train_y_data = train_y_data
 
         total_epoch = epoch
         for epoch in range(epoch + 1):
@@ -113,7 +118,7 @@ if __name__ == "__main__":
                 # 創建批次數據
                 x_lstm_model.train()
                 x_input_data = []
-                for i in range(0, traning_size, batch_size):
+                for i in range(0, batch_size):
                         if standardization == 1:
                                 batch_x_input_data_all = train_x_data_norm[i:i+batch_size]
                         else:
@@ -163,11 +168,11 @@ if __name__ == "__main__":
                         # x_loss = x_loss_fn(x_lstm_output[0:batch_size, 0:3], x_target[i:i+batch_size, 0:3])
                         # ------------------------------mse損失函數------------------------------ #
                         # x_loss = x_loss_fn(x_lstm_output[:batch_size, :], acc_tar)
-                        x_loss = x_loss_fn(x_lstm_output[:batch_size, :], x_target)
+                        # x_loss = x_loss_fn(x_lstm_output[:batch_size, :], x_target)
 
                         # ------------------------------LogCoshLoss損失函數------------------------------ #
                         # x_loss = LogCoshLoss_loss_fn(x_lstm_output[:batch_size, :], acc_tar)
-                        # x_loss = StableLogCoshLoss_loss_fn(x_lstm_output[:batch_size, :], x_target)
+                        x_loss = StableLogCoshLoss_loss_fn(x_lstm_output[:batch_size, :], x_target)
 
                         # x_loss = x_loss_fn(x_lstm_output[0:batch_size, :1], x_target[i:i+batch_size]) #可以得到一個epoch中每筆資料的mse
                         x_loss_data.append(x_loss.item()) 

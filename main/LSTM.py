@@ -13,6 +13,7 @@ class LSTM_KF(nn.Module):
         lstm_out, _ = self.lstm(x)
         output = self.fc(lstm_out[:, -1, :])  # 只取最後一個時間步的輸出
         # out = self.fc(output)        # output shape: (batch, output_size)
-        out = self.relu(output)              # Apply ReLU except final activation
-        final_output = torch.exp(out)   
-        return final_output
+        # out = self.relu(output)              # Apply ReLU except final activation
+        final_output = torch.exp(output)
+        # final_output = self.relu(output) 
+        return output
