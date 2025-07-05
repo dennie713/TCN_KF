@@ -25,48 +25,48 @@ if __name__ == "__main__":
     # 選擇輸入資料
     scara = 1
     if scara == 1:
-        path1 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
-        # path5 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
-        path8 = 'main/dataset/Real_AKF_OLS_6axis2_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+        path1 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_6axis2_n=5_n1n2=5_12000/G_tel_data_all_AKF.txt'
     elif scara == 2:
-        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/Q_data_all_AKF.txt'
-        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/est_err_data_all_AKF.txt'
-        path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=10_n1n2=20_12000/G_tel_data_all_AKF.txt'
+        path1 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_6axis3_n=50_n1n2=50_12000/G_tel_data_all_AKF.txt'
     elif scara == 3:
-        path1 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/Q_data_all_AKF.txt'
-        path5 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/est_err_data_all_AKF.txt'
-        # path8 = 'main/dataset/Real_AKF_OLS_scara1_n=10_12000/G_tel_data_all_AKF.txt'
+        path1 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara1_n=5_n1n2=5_12000/G_tel_data_all_AKF.txt'
     elif scara == 4:
-        path1 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_data_all_AKF.txt'
-        path2 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/P_data_all_AKF.txt'
-        path3 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/raw_data_all_AKF.txt'
-        path4 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/Q_data_all_AKF.txt'
-        path5 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/x_RTS_AKF.txt'
-        # path6 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/K_RTS_AKF.txt'
-        path7 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/est_err_data_all_AKF.txt'
-        # path8 = 'main/dataset/Real_AKF_OLS_scara2_n=10_12000/G_tel_data_all_AKF.txt'
+        path1 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/x_data_all_AKF.txt'
+        path2 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/P_data_all_AKF.txt'
+        path3 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/raw_data_all_AKF.txt'
+        path4 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/Q_data_all_AKF.txt'
+        # path5 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/x_RTS_AKF.txt'
+        # path6 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/K_RTS_AKF.txt'
+        path7 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/est_err_data_all_AKF.txt'
+        # path8 = 'main/dataset/Real_AKF_OLS_scara2_n=50_n1n2=50_12000/G_tel_data_all_AKF.txt'
     # Q_data = np.loadtxt(path4, delimiter=' ')
     # x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7, path8)
     x_data, x_k_update_data, k_y_data, x_tel, x_true, x_true_noise, x_input_data_all, P_data, P_k_update_data, KCP_data, P_input_data_all, raw_data_all, x_k_predict_data, Q_data_all = dataset_arrange.loadSimData(path1, path2, path3, path4, path7)
 
-    if scara == 3 or scara == 4:
-        x_RTS_data = np.loadtxt(path5, delimiter=' ').reshape(-1, 3) # RTS平滑後的結果
-        # print("x_RTS_data.shape =", x_RTS_data.shape)
+    # if scara == 3 or scara == 4:
+    #     x_RTS_data = np.loadtxt(path5, delimiter=' ').reshape(-1, 3) # RTS平滑後的結果
+    #     # print("x_RTS_data.shape =", x_RTS_data.shape)
     
         #-----------------------------------Ground Truth-------------------------------------------#
     # 目前的Ground Truth是把數據先經過"zero-phase-filter濾波"後再進行"中央差分法"計算的
@@ -172,7 +172,7 @@ if __name__ == "__main__":
                 # x_tcn_output = torch.exp(x_tcn_output)  # 確保輸出正數（用來當共變異的對角項）
             elif standardization == 0:
                 x_tcn_output = x_tcn_output.detach().cpu()
-            print("Q =\n", np.diag(x_tcn_output))
+            print("Q =\n", np.diag(x_tcn_output.numpy().flatten()))
         # 以log計算
         # x_tcn_output = torch.exp(x_tcn_output)  # 確保輸出正數（用來當共變異的對角項）
         x_tcn_output_data.append(x_tcn_output.detach().cpu().numpy().flatten())
